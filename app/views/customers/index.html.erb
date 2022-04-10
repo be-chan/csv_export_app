@@ -28,7 +28,7 @@
         <td><%= customer.address %></td>
         <td><%= link_to 'Show', customer %></td>
         <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-        <td><%= link_to 'CSV', customer_csv_export_customer_path(customer, format: :csv),data: {disable_with: "出力中"} %></td>
+        <td><%= link_to 'CSV', customers_path(id: customer.id ,format: :csv) %></td>
         <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

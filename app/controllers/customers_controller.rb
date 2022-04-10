@@ -4,27 +4,19 @@ class CustomersController < ApplicationController
 
   # GET /customers or /customers.json
   def index
-    @q = Customer.search(params[:q])
-    @customers = @q.result(distinct: true)
-  end
-
-  def customer_csv_export
     respond_to do |format|
+      format.html do 
+        @q = Customer.search(params[:q])
+        @customers = @q.result(distinct: true)
+      end
       format.csv do |csv|
-        head :no_content
-    
         customer = Customer.find(params[:id])
         filename = customer.name + Date.current.strftime("%Y%m%d")
-        
-        csv_data = CSV.generate do |csv|
+        csv_data = CSV.generate(encoding:Encoding::SJIS) do |csv|
           csv << Customer.column_names
           csv << customer.attributes.values_at(*Customer.column_names)
         end
-        File.open("#{filename}.csv", "w", encoding: "SJIS") do |file|
-          file.write(csv_data)
-        end
-        stat = File::stat("#{filename}.csv")
-        send_file("#{filename}.csv", filename: "#{filename}.csv", length: stat.size)
+        send_data(csv_data, filename: "#{filename}.csv")
       end
     end
   end
