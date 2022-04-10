@@ -1,0 +1,40 @@
+
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_cont, "Name" %><%= f.text_field :name_cont %>
+  <%= f.label :birthday_eq, "Birthday" %><%= f.text_field :birthday_eq %>
+  <%= f.label :sex_eq, "Sex" %><%= f.text_field :sex_eq %>
+  <%= f.label :address_cont, "Address" %><%= f.text_field :address_cont %>
+
+  <%= f.submit %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Birthday</th>
+      <th>Sex</th>
+      <th>Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= customer.name %></td>
+        <td><%= customer.birthday %></td>
+        <td><%= customer.sex %></td>
+        <td><%= customer.address %></td>
+        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+        <td><%= link_to 'CSV', customer_csv_export_customer_path(customer, format: :csv),data: {disable_with: "出力中"} %></td>
+        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Customer', new_customer_path %>

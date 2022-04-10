@@ -1,0 +1,7 @@
+<% 100.times do |i| %>
+customer<%= i %>:
+  name: <%= Faker::Name.name %>
+  birthday: <%= Faker::Business.credit_card_expiry_date - 30.years %>
+  sex: <%= %W(male female).sample %>
+  address: <%= Faker::Address.city %>
+<% end %>
